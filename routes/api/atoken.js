@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const TokenManager = require('../../common/token')
-const tm = new TokenManager()
+const tokenService = require('../../service/tokenService')
 
 router.get('/', function(req, res){
-    res.json(tm.createToken(1))
+    let ts = new tokenService()
+    let result = ts.createToken(1)
+    res.json(result)
 })
 
 module.exports = router

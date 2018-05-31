@@ -8,32 +8,32 @@ use expressdb;
 
 -- user table
 drop table if exists t_user;
-create table t_user(
-	id int(16) not null auto_increment primary key,
-    username varchar(256) not null,
-    password varchar(1024) not null,
-    tel varchar(64),
-    update_date timestamp not null on update current_timestamp,
-    create_date timestamp not null default current_timestamp,
-    del_flag char(1) not null default '0'
-    );
+CREATE TABLE t_user (
+    id INT(16) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(256) NOT NULL,
+    password VARCHAR(1024) NOT NULL,
+    tel VARCHAR(64),
+    update_date TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+    create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    del_flag CHAR(1) NOT NULL DEFAULT '0'
+);
     
 -- token table
 drop table if exists t_token;
-create table t_token(
-	id int(16) not null auto_increment primary key,
-    user_id int(16) not null,
-    token_str varchar(1024) not null,
-    create_date timestamp not null default current_timestamp,
-    update_date timestamp not null on update current_timestamp
-    );
+CREATE TABLE t_token (
+    -- id INT(16) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT(16) NOT NULL PRIMARY KEY,
+    token_str VARCHAR(1024) NOT NULL,
+    create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    update_date TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP
+);
     
     
 -- table role
 drop table if exists t_role;
-create table t_role(
-	id int(8) not null auto_increment primary key,
-	role varchar(64) not null default 'guest'
+CREATE TABLE t_role (
+    id INT(8) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    role VARCHAR(64) NOT NULL DEFAULT 'guest'
 );
 -- init roles
 INSERT INTO t_role(role) values('user');

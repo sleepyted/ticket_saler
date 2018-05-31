@@ -3,7 +3,7 @@
  */
 const mysql = require('mysql')
 const config = require('./config')
-const DbUtil = function () {
+const databaseBaseOprator = function () {
 
     let self = this
     /**
@@ -66,11 +66,11 @@ const DbUtil = function () {
     return {
         connect: self._connect,
         disconnect:self._disconnect,
-        query:self._query
+        executeQuery:self._query
     }
 }
 
-let instance = new DbUtil()
+let instance = new databaseBaseOprator()
 module.exports = instance
 // let getInstance = function(){
 //     if(instance == null){
