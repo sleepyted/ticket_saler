@@ -4,8 +4,14 @@ const tokenService = require('../../service/tokenService')
 
 router.get('/', function(req, res){
     let ts = new tokenService()
-    let result = ts.createToken(1)
-    res.json(result)
+    ts.createToken(2)
+        .then(data => {
+            res.json(data)
+        })
+        .catch(err => {
+            res.send(err)
+        })
+    // res.json(result)
 })
 
 module.exports = router
