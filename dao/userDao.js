@@ -1,21 +1,26 @@
 const db = require('../db/base')
 
-let userDao = function(){
+let userDao = function () {
     let self = this
-    const sql  = {
-        create : 'INSERT INTO t_user(username, password, tel) VALUES(?,?,?)',
+    const sql = {
+        create: 'INSERT INTO t_user(username, password, tel) VALUES(?,?,?)',
         resolve: 'SELECT id, username, tel, update_date, create_date FROM t_user WHERE id = ? AND del_flag != 0',
         //TODO finish user sql
         update: '',
-        delete: ''
+        delete: '',
+        resolveByNamePwd: 'SELECT id, username, tel, update_date, create_date FROM t_user WHERE id = ? AND password = ? AND del_flag != 0',
     }
 
-    self._createUser = function(username, password, tel){
+    self._createUser = function (username, password, tel) {
         return db.executeQuery(sql.create, [username, password, tel])
     }
 
-    self._resolveUser = function(user_id){
+    self._resolveUser = function (user_id) {
         return db.executeQuery(sql.resolve, [user_id])
+    }
+
+    self._resolveUserByNamePwd = function (username, pwd) {
+        return db.executeQuery(sql.resolveByNamePwd, [username, pwd])
     }
 
     // self._updateUser = function(user_id, token_str){
@@ -29,6 +34,7 @@ let userDao = function(){
     return {
         createUser: self._createUser,
         resolveUser: self._resolveUser,
+        resolveUserByNamePwd: self._resolveUserByNamePwd
         // updateUser: self._updateUser,
         // deleteUser: self._deleteUser
     }
