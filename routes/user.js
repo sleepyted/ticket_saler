@@ -9,7 +9,7 @@ router.get('/login', function (req, res) {
     if(username && password){
         user_service.login(username, password)
             .then(data => {
-                res.json(data)
+                res.json({status: 1, result: data})
             })
             .catch(err => {
                 res.json(err)

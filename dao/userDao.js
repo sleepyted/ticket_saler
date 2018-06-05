@@ -4,11 +4,11 @@ let userDao = function () {
     let self = this
     const sql = {
         create: 'INSERT INTO t_user(username, password, tel) VALUES(?,?,?)',
-        resolve: 'SELECT id, username, tel, update_date, create_date FROM t_user WHERE id = ? AND del_flag != 0',
+        resolve: 'SELECT id, username, tel, update_date, create_date FROM t_user WHERE id = ? AND del_flag = 0',
         //TODO finish user sql
         update: '',
         delete: '',
-        resolveByNamePwd: 'SELECT id, username, tel, update_date, create_date FROM t_user WHERE id = ? AND password = ? AND del_flag != 0',
+        resolveByNamePwd: 'SELECT id, username, tel, update_date, create_date FROM t_user WHERE username = ? AND password = ? AND del_flag = 0',
     }
 
     self._createUser = function (username, password, tel) {

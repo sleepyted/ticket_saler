@@ -28,20 +28,18 @@ let tokenService = function () {
                         reject(Const.USER_NOT_FOUND)
                 })
                 .then(() => {
-                    tokendao.resolveToken(user_id)
-                    .then(data => {
-                        if (data.length > 0) {
-                            tokendao.updateToken(tokenModel.id, tokenModel.token)
-                                .then(data => {
-                                    resolve(tokenModel)
-                                })
-                        } else {
-                            tokendao.createToken(tokenModel.id, tokenModel.token)
-                                .then(data => {
-                                    resolve(tokenModel)
-                                })
-                        }
-                    })
+                    return tokendao.resolveToken(user_id)
+                })
+                .then(data => {
+                    if (data.length > 0) {
+                        return tokendao.updateToken(tokenModel.id, tokenModel.token)
+                           
+                    } else {
+                        return tokendao.createToken(tokenModel.id, tokenModel.token)
+                    }
+                })
+                .then(data => {
+                    resolve(tokenModel)
                 })
                 .catch(err => {
                     console.error(err)

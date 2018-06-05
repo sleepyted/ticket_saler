@@ -17,6 +17,9 @@ CREATE TABLE t_user (
     create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     del_flag CHAR(1) NOT NULL DEFAULT '0'
 );
+INSERT INTO t_user (username, password, tel) VALUES('ted', '111', '88888888');
+INSERT INTO t_user (username, password, tel) VALUES('tom', '222', '66666666');
+INSERT INTO t_user (username, password, tel, del_flag) VALUES('del', '333', '00000000', '1');
     
 -- token table
 drop table if exists t_token;
