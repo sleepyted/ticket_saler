@@ -18,6 +18,8 @@ router.post('/', function (req, res) {
             .catch(err => {
                 res.json({ status: 0, result: err })
             })
+    }else{
+        res.json({status : 0, result: "param sql not got"})
     }
     // res.json(result)
 })
