@@ -16,7 +16,7 @@ CREATE TABLE t_user (
     update_date TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
     create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     del_flag CHAR(1) NOT NULL DEFAULT '0'
-);
+)charset utf8;
     
 -- token table
 drop table if exists t_token;
@@ -26,7 +26,7 @@ CREATE TABLE t_token (
     token_str VARCHAR(1024) NOT NULL,
     create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_date TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP
-);
+)charset utf8;
     
     
 -- table role
@@ -34,7 +34,7 @@ drop table if exists t_role;
 CREATE TABLE t_role (
     id INT(16) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     role VARCHAR(64) NOT NULL
-);
+)charset utf8;
 -- init roles
 INSERT INTO t_role(role) values('user');
 INSERT INTO t_role(role) values('admin');
@@ -45,11 +45,11 @@ drop table if exists t_user_role;
 CREATE TABLE t_user_role(
     user_id INT(16) NOT NULL,
     role_id INT(16) NOT NULL,
-    FOREIGN KEY user_id REFERENCES t_user(id),
-    FOREIGN KEY role_id REFERENCES t_role(id)
-);
+    FOREIGN KEY (user_id) REFERENCES t_user(id),
+    FOREIGN KEY (role_id) REFERENCES t_role(id)
+)charset utf8;
 
---movie
+-- movie
 drop table if exists t_movie;
 CREATE TABLE t_movie(
     id INT(16) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -57,11 +57,11 @@ CREATE TABLE t_movie(
     duration DATETIME NOT NULL,
     director VARCHAR(256),
     actors VARCHAR(1024),
-    desc TEXT,
+    description TEXT,
     show_date TIMESTAMP NOT NULL,
     out_date TIMESTAMP NOT NULL,
     create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+)charset utf8;
 
 -- theatre
 drop table if exists t_theatre;
@@ -70,9 +70,9 @@ CREATE TABLE t_theatre(
     name VARCHAR(1024) NOT NULL,
     location VARCHAR(1024) NOT NULL,
     tel VARCHAR(64),
-    desc TEXT,
+    description TEXT,
     create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+)charset utf8;
 
 -- room
 drop table if exists t_room;
@@ -83,9 +83,9 @@ CREATE TABLE t_room(
     -- size INT(8) NOT NULL,
     row_size INT(2) NOT NULL,
     col_size INT(2) NOT NULL,
-    desc TEXT,
-    FOREIGN KEY theatre_id REFERENCES t_theatre(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
+    description TEXT,
+    FOREIGN KEY (theatre_id) REFERENCES t_theatre(id) ON DELETE CASCADE ON UPDATE CASCADE
+)charset utf8;
 
 
 -- movie ordered
@@ -96,12 +96,12 @@ CREATE TABLE t_platoon(
     movie_id INT(16) NOT NULL,
     price FLOAT(2) NOT NULL,
     show_time TIMESTAMP NOT NULL,
-    FOREIGN KEY room_id REFERENCES t_room (id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY movie_id REFERENCES t_movie(id) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (room_id) REFERENCES t_room (id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (movie_id) REFERENCES t_movie(id) ON DELETE CASCADE ON UPDATE CASCADE
     
-);
+)charset utf8;
 
-seat record
+-- seat record
 drop table if exists t_platoon_seat;
 CREATE TABLE t_platoon_seat(
     -- seat_str VARCHAR(4) NOT NULL
@@ -110,7 +110,7 @@ CREATE TABLE t_platoon_seat(
     sold CHAR(1) NOT NULL DEFAULT '0', -- 0 on sale   1  sold
     seat_row INT(2) NOT NULL,
     seat_col INT(2) NOT NULL
-);
+)charset utf8;
 
 -- ticket table
 drop table if exists t_ticket;
@@ -123,11 +123,11 @@ CREATE TABLE t_ticket(
     -- theatre_id INT(16) NOT NULL,
     create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     status CHAR(1) NOT NULL DEFAULT '0',   -- 0 unused 1 used
-    FOREIGN KEY user_id REFERENCES t_user(id),
-    FOREIGN KEY platoon_id REFERENCES t_platoon(id),
-    FOREIGN KEY seat_id REFERENCES t_platoon_seat(id)
+    FOREIGN KEY (user_id) REFERENCES t_user(id),
+    FOREIGN KEY (platoon_id) REFERENCES t_platoon(id),
+    FOREIGN KEY (seat_id) REFERENCES t_platoon_seat(id)
     -- FOREIGN KEY movie_id REFERENCES t_movie(id)
-);
+)charset utf8;
 
 -- add test user data
 INSERT INTO t_user (username, password, tel) VALUES('ted', '111', '88888888');
@@ -135,9 +135,9 @@ INSERT INTO t_user (username, password, tel) VALUES('tom', '222', '66666666');
 INSERT INTO t_user (username, password, tel, del_flag) VALUES('del', '333', '00000000', '1');
 
 -- add test threatre data
-INSERT INTO t_theatre(name, location, tel , desc)
+INSERT INTO t_theatre(name, location, tel , description)
     VALUES('万达国际影城(CBD万达店)', '市北区延吉路112号CBD万达广场', '0532-55563939', '暂无');
-INSERT INTO t_theatre(name, location, tel , desc)
+INSERT INTO t_theatre(name, location, tel , description)
     VALUES('万达国际影城(台东万达店) ', '市北区台东三路63号万达广场4楼', '0532-83625656', '暂无');
-INSERT INTO t_theatre(name, location, tel , desc)
+INSERT INTO t_theatre(name, location, tel , description)
     VALUES('中国电影院', '市南区中山路97号', '0532-82864319', '暂无');
