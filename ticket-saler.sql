@@ -16,7 +16,7 @@ CREATE TABLE t_user (
     update_date TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
     create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     del_flag CHAR(1) NOT NULL DEFAULT '0'
-)charset utf8;
+);
     
 -- token table
 drop table if exists t_token;
@@ -26,7 +26,7 @@ CREATE TABLE t_token (
     token_str VARCHAR(1024) NOT NULL,
     create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_date TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP
-)charset utf8;
+);
     
     
 -- table role
@@ -34,7 +34,7 @@ drop table if exists t_role;
 CREATE TABLE t_role (
     id INT(16) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     role VARCHAR(64) NOT NULL
-)charset utf8;
+);
 -- init roles
 INSERT INTO t_role(role) values('user');
 INSERT INTO t_role(role) values('admin');
@@ -47,7 +47,7 @@ CREATE TABLE t_user_role(
     role_id INT(16) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES t_user(id),
     FOREIGN KEY (role_id) REFERENCES t_role(id)
-)charset utf8;
+);
 
 -- movie
 drop table if exists t_movie;
@@ -61,7 +61,7 @@ CREATE TABLE t_movie(
     show_date TIMESTAMP NOT NULL,
     out_date TIMESTAMP NOT NULL,
     create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-)charset utf8;
+);
 
 -- theatre
 drop table if exists t_theatre;
@@ -72,7 +72,7 @@ CREATE TABLE t_theatre(
     tel VARCHAR(64),
     description TEXT,
     create_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-)charset utf8;
+);
 
 -- room
 drop table if exists t_room;
@@ -85,7 +85,7 @@ CREATE TABLE t_room(
     col_size INT(2) NOT NULL,
     description TEXT,
     FOREIGN KEY (theatre_id) REFERENCES t_theatre(id) ON DELETE CASCADE ON UPDATE CASCADE
-)charset utf8;
+);
 
 
 -- movie ordered
@@ -99,7 +99,7 @@ CREATE TABLE t_platoon(
     FOREIGN KEY (room_id) REFERENCES t_room (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (movie_id) REFERENCES t_movie(id) ON DELETE CASCADE ON UPDATE CASCADE
     
-)charset utf8;
+);
 
 -- seat record
 drop table if exists t_platoon_seat;
@@ -110,7 +110,7 @@ CREATE TABLE t_platoon_seat(
     sold CHAR(1) NOT NULL DEFAULT '0', -- 0 on sale   1  sold
     seat_row INT(2) NOT NULL,
     seat_col INT(2) NOT NULL
-)charset utf8;
+);
 
 -- ticket table
 drop table if exists t_ticket;
@@ -127,7 +127,7 @@ CREATE TABLE t_ticket(
     FOREIGN KEY (platoon_id) REFERENCES t_platoon(id),
     FOREIGN KEY (seat_id) REFERENCES t_platoon_seat(id)
     -- FOREIGN KEY movie_id REFERENCES t_movie(id)
-)charset utf8;
+);
 
 -- add test user data
 INSERT INTO t_user (username, password, tel) VALUES('ted', '111', '88888888');
