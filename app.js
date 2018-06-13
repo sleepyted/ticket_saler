@@ -30,7 +30,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
-// app.use(bodyParser.json());
+ app.use(bodyParser());
 // app.use(bodyParser.text());
 // app.use(bodyParser.urlencoded());
 app.use(express.json());
