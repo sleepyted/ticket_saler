@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser')
-
+var tokenService = require('./service/tokenService')
 // var dbUtil = require('./db/base')
 
 var indexRouter = require('./routes/index');
@@ -40,6 +40,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/token', tokenRouter)
+
+let ts = new tokenService()
+app.use(function(req, res, next){
+  console.log('req ------')
+  console.log(req.path)
+  console.log(req.url)
+  console.log('------')
+  if(req.path == '/api/token'){
+    next()
+    return
+  }
+  let auth = req.headers.auth
+  if(auth && ts.checkToken(auth)){
+     console.log(ts.checkToken(auth))
+      next()
+  }else{
+  // console.log(header)
+  next(createError(404))
+  }
+})
 app.use('/users', usersRouter);
 app.use('/api', apiDispacher)
 

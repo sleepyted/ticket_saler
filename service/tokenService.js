@@ -33,7 +33,7 @@ let tokenService = function () {
                 .then(data => {
                     if (data.length > 0) {
                         return tokendao.updateToken(tokenModel.id, tokenModel.token)
-                           
+
                     } else {
                         return tokendao.createToken(tokenModel.id, tokenModel.token)
                     }
@@ -45,7 +45,7 @@ let tokenService = function () {
                     console.error(err)
                     reject(Const.ERR_CODE)
                 })
-          
+
 
         })
 
@@ -66,18 +66,20 @@ let tokenService = function () {
         return null
     }
 
-    self._checkToken = function (auth) {
-        if (self._getToken(auth)) {
-            //chazhao token shujuku 
-            tokendao.resolveToken(token.id)
+    self._checkToken = async function (auth) {
+        let tokenModel = self._getToken(auth)
+        if (tokenModel) {
+            
+            await tokendao.resolveToken(tokenModel.id)
                 .then(data => {
                     if (data.length > 0) {
                         if (data[0].token_str == tokenModel.token)
                             return true
                     }
                 })
+        } else {
+            return false
         }
-        return false
     }
 
     return {
